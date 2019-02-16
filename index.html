@@ -1,0 +1,76 @@
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .active { fill: blue !important;}
+        /*.datamaps-key dt, .datamaps-key dd {float: none !important;}
+        .datamaps-key {right: -50px; top: 0;}*/
+    </style>
+</head>
+<body>
+
+<div id="container" style="width: 1080px; height: 600px; position: relative;"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script>
+    <script src="node_modules/datamaps/dist/datamaps.world.min.js"></script>
+
+<script>
+    const events = [
+        {
+            event: 'e1'
+            country: 'THA'
+        },
+        {
+            event: 'e2'
+            country: 'THA'
+        },
+        {
+            event: 'e3'
+            country: 'USA'
+        }
+    ];
+    var map = new Datamap({
+        element: document.getElementById('container'),
+        fills: {
+            HIGH: '#afafaf',
+            LOW: '#123456',
+            MEDIUM: 'blue',
+            UNKNOWN: 'rgb(0,0,0)',
+            defaultFill: 'grey'
+        },
+        data: {
+            THA: {
+                fillKey: 'LOW',
+                events: [
+                    {
+                        name: 'e1'
+                    }
+                ]
+            },
+            IRL: {
+                fillKey: 'LOW',
+                events: []
+            },
+            USA: {
+                fillKey: 'MEDIUM',
+                events: []
+            }
+        },
+        geographyConfig: {
+            popupTemplate: function(geo, data) {
+                return [
+                    '<div class="hoverinfo"><strong>',
+                        'Number of things in ' + geo.properties.name,
+                        ': ' + data.events.length + ' ' + data.events.map((e) => { return e.name}),
+                    '</strong></div>'].join('');
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
